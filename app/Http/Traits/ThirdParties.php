@@ -22,11 +22,4 @@ trait ThirdPartyTrait
             'text' => $message ?: 'Using the facade to send a message.'
         ]);
     }
-
-    public function sendWhatsApp(array $config = NULL)
-    {
-        $whatsApp = new Twilio;
-
-        $whatsApp->sendWhatsAppSMS();
-    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Traits\ThirdPartyTrait;
 use Illuminate\Http\Request;
 use PHPShopify\ShopifySDK;
+use Utils\Twilio;
 
 class ShopifyController extends Controller
 {
@@ -34,8 +35,6 @@ class ShopifyController extends Controller
 
         $getProducts = $id ? $this->query->Product($id)->get() : $this->query->Product->get();
         
-        $this->sendWhatsApp();
-
         return $getProducts;
     }
 
@@ -60,6 +59,14 @@ class ShopifyController extends Controller
         ) : $request;
 
         $postProducts = $this->query->Product->post($filterRequest);
+
+        $twilio = new Twilio;
+
+        ['title' => $title, 'vendor' => $vendor] = $postProducts;
+
+        $body = "Thank you for purchasing {$title} from {$vendor} hope to see you again @ https://jaremsalonga.myshopify.com/";
+
+        $twilio->sendWhatsAppSMS('+14155238886', '+639354244394', $body);
 
         return $postProducts;
     }
