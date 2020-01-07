@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Traits\NexmoTrait;
+use App\Traits\ThirdPartyTrait;
 use Illuminate\Http\Request;
 use PHPShopify\ShopifySDK;
 
@@ -11,7 +11,7 @@ class ShopifyController extends Controller
     //
 
 
-    use NexmoTrait;
+    use ThirdPartyTrait;
 
     public $config = array(
         'ShopUrl' => 'jaremsalonga.myshopify.com',
@@ -34,7 +34,7 @@ class ShopifyController extends Controller
 
         $getProducts = $id ? $this->query->Product($id)->get() : $this->query->Product->get();
         
-        $this->send();
+        $this->sendWhatsApp();
 
         return $getProducts;
     }
